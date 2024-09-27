@@ -20,22 +20,20 @@ class Server {
     constructor(host, port) {
         this.host = host;
         this.port = port;
-        this.fileHandler = new FileHandler('./data.txt');
+        this.fileHandler = new FileHandler('./file.txt');
     }
 
     start() {
         http.createServer((req, res) => {
             const q = url.parse(req.url, true);
             const path = q.pathname;
-            console.log(`Path: ${path}`);
-
             const query = q.query;
 
             if (path === "/getDate/") {
                 this.handleGetDate(query.name, res);
 
             } else if (path === "/writeFile/") {
-                this.handleWriteFile(query.text, './data.txt', res);
+                this.handleWriteFile(query.text, './file.txt', res);
 
             } else if (path.startsWith("/readFile/")) {
                 const filename = path.split('/').pop();
