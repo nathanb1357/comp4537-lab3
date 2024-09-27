@@ -31,13 +31,13 @@ class Server {
 
             const query = q.query;
 
-            if (path === "/labs/lab3/getDate/") {
+            if (path === "/getDate/") {
                 this.handleGetDate(query.name, res);
 
-            } else if (path === "/labs/lab3/writeFile/") {
-                this.handleWriteFile(query.text, './labs/lab3/data.txt', res);
+            } else if (path === "/writeFile/") {
+                this.handleWriteFile(query.text, './data.txt', res);
 
-            } else if (path.startsWith("/labs/lab3/readFile/")) {
+            } else if (path.startsWith("/readFile/")) {
                 const filename = path.split('/').pop();
                 this.handleReadFile(filename, res);
             }
@@ -60,7 +60,7 @@ class Server {
     }
 
     handleReadFile(filename, res) {
-        this.fileHandler.readFile(`./labs/lab3/${filename}`, (err, data) => {
+        this.fileHandler.readFile(`./${filename}`, (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 res.end(`<p>${en.messages.readFail.replace('%1', filename)}</p>`);
@@ -73,5 +73,5 @@ class Server {
 }
 
 
-const server = new Server('localhost', 8888);
+const server = new Server('0.0.0.0', 10000);
 server.start();
