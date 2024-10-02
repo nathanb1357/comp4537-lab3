@@ -43,7 +43,10 @@ class Server {
     }
 
     handleGetDate(name, res) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.writeHead(200, {
+            'Content-Type': 'text/html',
+            'Access-Control-Allow-Origin': '*'
+        });
         const user = name || "Anonymous";
         const date = utils.getDate();
         res.end(`<p style="color:blue">${en.messages.dateMessage.replace('%1', user)} ${date}</p>`);
@@ -60,10 +63,16 @@ class Server {
     handleReadFile(filename, res) {
         this.fileHandler.readFile(`./${filename}`, (err, data) => {
             if (err) {
-                res.writeHead(404, {'Content-Type': 'text/html'});
+                res.writeHead(404, {
+                    'Content-Type': 'text/html',
+                    'Access-Control-Allow-Origin': '*'
+                });
                 res.end(`<p>${en.messages.readFail.replace('%1', filename)}</p>`);
             } else {
-                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.writeHead(200, {
+                    'Content-Type': 'text/html',
+                    'Access-Control-Allow-Origin': '*'
+                });
                 res.end(`<p style="white-space:pre-line">${data}</p>`);
             }
         });
